@@ -73,9 +73,13 @@ String numberList = "";
      * @return The largest element in the list.
      */
     public static int GetMax(ArrayList<Integer> numbers) {
-
+        int max = 0;
+        for (int i = 0; i < numbers.size(); i++){
+            if (numbers.get(i) > max)
+                max = numbers.get(i);
+    }
+        return max;
         // write your code above and remove the line below
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -93,9 +97,12 @@ String numberList = "";
      * @return A list of all numbers between first and last.
      */
     public static ArrayList<Integer> CreateNumberArray(int first, int last) {
-
+        ArrayList<Integer> a = new ArrayList<>();
+        for (int i = first; i<last; i++) {
+            a.add(i);
+        }
+        return a;
         // write your code above and remove the line below
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -106,9 +113,16 @@ String numberList = "";
      * @return The first student whose favorite color is the one specified.
      */
     public static Student GetFirstStudentWithFavoriteColor(ArrayList<Student> students, String color) {
-
+        Student favorite = null;
+        for (int i =0; i<students.size();i++){
+            if (students.get(i).GetFavoriteColor().equals(color)) {
+                favorite = students.get(i);
+                break;
+            }
+        }
+        return favorite;
         // write your code above and remove the line below
-        throw new UnsupportedOperationException();
+
     }
 
     /**
@@ -119,9 +133,13 @@ String numberList = "";
      * @return The favorite color of the specified student.
      */
     public static String GetFavoriteColorOfStudent(ArrayList<Student> students, String name) {
-
-        // write your code above and remove the line below
-        throw new UnsupportedOperationException();
+        for (int i=0; i<students.size();i++){
+            if (students.get(i).GetName().equals(name)){
+                return students.get(i).GetFavoriteColor();
+            }
+        }
+        return "";
+        // write your code above and remove the line belo
     }
 
     /**
@@ -131,9 +149,14 @@ String numberList = "";
      * @return The tallest student in the list.
      */
     public static Student GetTallestStudent(ArrayList<Student> students) {
-
+        Student tallest = students.get(0);
+        for (int i =0; i<students.size();i++){
+            if (students.get(i).GetHeight()>tallest.GetHeight()){
+                tallest = students.get(i);
+            }
+        }
+        return tallest;
         // write your code above and remove the line below
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -149,9 +172,13 @@ String numberList = "";
      * @return List of Student objects.
      */
     public static ArrayList<Student> CreateStudentArray(ArrayList<String> names, ArrayList<Integer> heights, ArrayList<Integer> gradeLevels, ArrayList<String> favoriteColors, ArrayList<BankAccount> bankAccounts) {
-
-        // write your code above and remove the line below
-        throw new UnsupportedOperationException();
+    ArrayList<Student> students = new ArrayList<>();
+    Student s = null;
+    for (int i=0; i<names.size();i++){
+        s = new Student (names.get(i), heights.get(i), gradeLevels.get(i), favoriteColors.get(i), bankAccounts.get(i));
+        students.add(s);
+    }
+    return students;
     }
 
     /**
@@ -167,9 +194,15 @@ String numberList = "";
      * @return A string that lists the team number followed by each team.
      */
     public static String GetTeamsString(ArrayList<ArrayList<Student>> teams) {
-
+        String total = "";
+        for (int i =0; i<teams.size();i++){
+            total+=teams.get(i);
+            for (int s =0; s<teams.get(i).size(); s++){
+                total+=teams.get(i).get(s);
+            }
+        }
+        return total;
         // write your code above and remove the line below
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -180,9 +213,12 @@ String numberList = "";
      * @param newFavoriteColor The new favorite color of the student.
      */
     public static void UpdateFavoriteColor(ArrayList<Student> students, String name, String newFavoriteColor) {
-
+        for (int i=0; i<students.size();i++){
+            if (students.get(i).GetName().equals(name)){
+                students.get(i).SetFavoriteColor(newFavoriteColor);
+            }
+        }
         // write your code above and remove the line below
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -193,9 +229,14 @@ String numberList = "";
      * @return An ArrayList containing all the students in gradeLevel.
      */
     public static ArrayList<Student> GetStudentsInGradeLevel(ArrayList<Student> students, int gradeLevel) {
-
+        ArrayList<Student>s= new ArrayList<>();
+        for (int i =0; i<students.size();i++){
+            if (students.get(i).GetGradeLevel()==(gradeLevel)){
+                s.add(students.get(i));
+            }
+        }
+        return s;
         // write your code above and remove the line below
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -209,9 +250,24 @@ String numberList = "";
      *     had sufficient funds in their account. Otherwise, false.
      */
     public static boolean TransferMoney(ArrayList<Student> students, String fromStudentName, String toStudentName, double amount) {
+        for (int i=0; i<students.size();i++){
+            if (students.get(i).GetName().equals(fromStudentName)){
+                for (int t=0; t<students.size();t++){
+                    if (students.get(t).GetName().equals(toStudentName)){
+                        if (students.get(i).GetBankAccount().GetBalance()<students.get(t).GetBankAccount().GetBalance()){
+                            return false;
+                        }
+                        else{
+                            students.get(t).GetBankAccount().Deposit(amount);
+                            students.get(i).GetBankAccount().Withdraw(amount);
+                            return true;
 
-        // write your code above and remove the line below
-        throw new UnsupportedOperationException();
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
