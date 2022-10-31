@@ -195,11 +195,17 @@ String numberList = "";
      */
     public static String GetTeamsString(ArrayList<ArrayList<Student>> teams) {
         String total = "";
+        int t =1;
         for (int i =0; i<teams.size();i++){
-            total+=teams.get(i);
+            total+="Team " + t + ": ";
             for (int s =0; s<teams.get(i).size(); s++){
-                total+=teams.get(i).get(s);
+                if (s>0)
+                total+=", " +teams.get(i).get(s).GetName();
+                else
+                    total+=teams.get(i).get(s).GetName();
             }
+            t++;
+            total+="\n";
         }
         return total;
         // write your code above and remove the line below
@@ -250,25 +256,33 @@ String numberList = "";
      *     had sufficient funds in their account. Otherwise, false.
      */
     public static boolean TransferMoney(ArrayList<Student> students, String fromStudentName, String toStudentName, double amount) {
-        for (int i=0; i<students.size();i++){
-            if (students.get(i).GetName().equals(fromStudentName)){
-                for (int t=0; t<students.size();t++){
-                    if (students.get(t).GetName().equals(toStudentName)){
-                        if (students.get(i).GetBankAccount().GetBalance()<students.get(t).GetBankAccount().GetBalance()){
-                            return false;
-                        }
-                        else{
-                            students.get(t).GetBankAccount().Deposit(amount);
-                            students.get(i).GetBankAccount().Withdraw(amount);
-                            return true;
-
-                        }
-                    }
-                }
+        Student from =null;
+        Student to =null;
+        for (int i=0; i<students.size();i++) {
+            if (students.get(i).GetName().equals(fromStudentName)) {
+                from = students.get(i);
             }
         }
-        return false;
-    }
+        for (int t=0; t<students.size();t++) {
+            if (students.get(t).GetName().equals(toStudentName)) {
+                to = students.get(t);
+            }
+        }
+        if (from==null || to ==null)
+            return false;
+        if (amount<0)
+            return false;
+        if (from.GetBankAccount().GetBalance()<amount){
+            return false;
+        }
+        else{
+            to.GetBankAccount().Deposit(amount);
+            from.GetBankAccount().Withdraw(amount);
+            return true;
+
+        }
+
+        }
 
     /**
      * EXTRA CREDIT:
@@ -291,7 +305,13 @@ String numberList = "";
      * @param students The list of students to sort.
      */
     public static void SortByGradeAndName(ArrayList<Student> students) {
+        ArrayList<Student> s= new ArrayList<Student>();
+        for (int i =0; i<students.size();i++){
+            if (students.get(i).GetGradeLevel()==9){
+                s.add(students.get(i));
+            }
 
+        }
         // write your code above and remove the line below
         throw new UnsupportedOperationException();
     }
